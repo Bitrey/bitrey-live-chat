@@ -2,8 +2,6 @@ var express = require("express");
 var app = express();
 var socket = require("socket.io");
 
-var server = app.listen(process.env.PORT, process.env.IP);
-
 app.get("/", function(req, res){
     res.render("index.ejs");
 });
@@ -14,6 +12,8 @@ app.get("/informazioni", function(req, res){
 
 // Static files
 app.use(express.static("public"));
+
+var server = app.listen(process.env.PORT, process.env.IP);
 
 // Socket setup
 var io = socket(server);

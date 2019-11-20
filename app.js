@@ -1,13 +1,16 @@
 var express = require("express");
 var app = express();
 var socket = require("socket.io");
+require('dotenv').config();
+
+app.set("view engine", "ejs")
 
 app.get("/", function(req, res){
-    res.render("index.ejs");
+    res.render("index");
 });
 
 app.get("/informazioni", function(req, res){
-    res.render("info.ejs");
+    res.render("info");
 });
 
 // Static files
@@ -19,7 +22,7 @@ var server = app.listen(process.env.PORT, process.env.IP);
 var io = socket(server);
 
 io.on("connection", function(socket){
-    console.log("Made websocket connection!");
+    console.log("Nuova connessione da " + socket.id + "!");
     socket.on("chat", function(data){
         io.sockets.emit("chat", data);
     });

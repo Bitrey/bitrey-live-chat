@@ -1,12 +1,30 @@
 var express = require("express");
 var app = express();
 var socket = require("socket.io");
+var mongoose = require("mongoose");
 require('dotenv').config();
 
-app.set("view engine", "ejs")
+app.set("view engine", "ejs");
+
+// CONNECT MONGODB URI
+mongoose.connect(process.env.mongoDBURI, { useNewUrlParser: true, useUnifiedTopology: true }, function(){
+    console.log("Database connesso!");
+});
+
+// SET MESSAGE SCHEMA
+var messageSchema = new mongoose.Schema({
+    username: String,
+    message: String
+});
+var Message = mongoose.model("messages", messageSchema)
+
+var sendMessage;
 
 app.get("/", function(req, res){
-    res.render("index");
+    Message.find({}, function(err, messageFound){
+        sendMessage = messageFound;
+    });
+    res.render("index", sendMessage);
 });
 
 app.get("/informazioni", function(req, res){

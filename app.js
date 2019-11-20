@@ -43,6 +43,13 @@ io.on("connection", function(socket){
     console.log("Nuova connessione da " + socket.id + "!");
     socket.on("chat", function(data){
         io.sockets.emit("chat", data);
+        var loadMessage = new Message({
+            username: data.username,
+            message: data.message
+        });
+        loadMessage.save(function(err, saved){
+            console.log(saved);
+        });
     });
 
     socket.on("typing", function(data){

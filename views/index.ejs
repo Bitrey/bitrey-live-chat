@@ -1,0 +1,19 @@
+<% include ./partials/header %>
+
+    <div class="container mt-1">
+        <div id="chat">
+
+            <div id="chat-window">
+                <div class="alert alert-danger" role="alert">
+                    Scrivi lo username e il messaggio!
+                </div>
+                <div id="output"></div>
+                <div id="feedback"></div>
+            </div>
+            <input id="username" type="text" placeholder="Username" required>
+            <input id="message" type="text" placeholder="Messaggio" required>
+            <button id="send">Invia</button>
+        </div>
+    </div>
+
+<% include ./partials/footer %>

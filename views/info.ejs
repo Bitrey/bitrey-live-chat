@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Websockets 101</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <link rel="stylesheet" href="./stylesheet/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/"><img src="https://imgoat.com/uploads/00da03b685/138870.png" alt="Salvini"
+                style="width: 2rem;">Live Chat</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="topNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Chat</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/informazioni">Informazioni <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+<div class="container info-container mt-4">
+    <h1 class="dispay-4">Taught by <a href="https://www.youtube.com/channel/UCW5YeuERMmlnqo4oq8vwUpg" target="_blank">The Net Ninja</a></h1>
+    <p>Developed by <a href="https://www.youtube.com/Bitrey" target="_blank">Bitrey</a>.</p>
+    <p>A huge thanks to The Net Ninja, you can find great tutorials on his channel!</p>
+    <p>Live chat built with <a href="https://socket.io/" target="_blank">socket.io</a></p>
+    <p>This website uses Bootstrap 4 and jQuery. Made with Node.js and Express.</p>
+</div>
+
+<% include ./partials/footer %>

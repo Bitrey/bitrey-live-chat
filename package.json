@@ -1,0 +1,19 @@
+{
+  "name": "websockets",
+  "version": "1.0.0",
+  "description": "First time using Socket.io",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BitreyDev",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.12",
+    "nodemon": "^2.0.0",
+    "socket.io": "^2.2.0"
+  }
+}

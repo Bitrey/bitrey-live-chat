@@ -25,7 +25,9 @@ function inviaMsg() {
 btn.addEventListener("click", inviaMsg);
 
 message.addEventListener("keypress", function() {
-    socket.emit("typing", username.value);
+    if(username.value != ""){
+        socket.emit("typing", username.value);
+    };
 });
 
 message.addEventListener("keyup", function(){
@@ -48,6 +50,7 @@ socket.on("pastMsg", function(data){
     data.forEach(function(message){
         output.innerHTML += "<p><strong>" + message.username + "</strong> " + message.message + "</p>";
     });
+    console.log(socket.id);
 });
 
 $(".hideMe").hide();
@@ -57,10 +60,12 @@ var sfondo = false;
 function magia(){
     $(".hideMe").toggle();
     if(sfondo == false){
+        $("#chat-window").css("background", "#ffffff88");
         $("#chat-window").css("background-image", "url('https://s5.gifyu.com/images/ezgif-2-52ade8a765d5.gif')");
         sfondo = true;
     } else {
+        $("#chat-window").css("background", "#f9f9f9");
         $("#chat-window").css("background-image", "");
         sfondo = false;
-    }
+    };
 };

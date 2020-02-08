@@ -80,7 +80,7 @@ io.on("connection", function(socket){
             if(err){
                 console.log(err);
             } else {
-                socket.emit("cancella", deleted);
+                io.emit("cancella", deleted);
             }
         });
     })

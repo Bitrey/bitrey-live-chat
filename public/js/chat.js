@@ -107,5 +107,8 @@ $("#output").on("click", ".delete", function(){
 });
 
 socket.on("cancella", function(data){
-    setTimeout(function(){$(`#${data.date}`).remove();}, 100);
+    setTimeout(function(){
+        var element = document.getElementById(data.date);
+        element.parentNode.removeChild(element);
+    }, 200);
 });

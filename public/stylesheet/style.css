@@ -33,7 +33,7 @@ h2{
     background-blend-mode: lighten;
 }
 
-#output p{
+#output p:not(#loading){
     padding: 14px 0px;
     margin: 0 20px;
     border-bottom: 1px solid #e9e9e9;
@@ -84,7 +84,29 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
-    border: 1px solid #ddd;
     box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
-    border-radius: 2px;
+}
+
+.delete {
+	background-color: #E74C3C;
+	height: 100%;
+	text-align: center;
+	color: white;
+	width: 0px;
+	display: inline-block;
+	transition: 0.3s;
+	/*opacity: 0;*/
+}
+
+p:hover .delete {
+	margin-right: 10px;
+	width: 40px;
+	/*opacity: 1.0;*/
+}
+
+.delete:hover{
+	background-color: rgb(192, 56, 41);
+}
+.delete:active {
+	background-color: rgb(156, 44, 31);
 }

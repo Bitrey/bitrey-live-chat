@@ -56,7 +56,7 @@ label{
     padding: 10px 20px;
 }
 
-input{
+input, textarea{
     padding: 10px 20px;
     box-sizing: border-box;
     background: #eee;
@@ -67,6 +67,7 @@ input{
     border-bottom: 1px solid #eee;
     font-family: Nunito;
     font-size: 16px;
+    transition-duration: 0.2s;
 }
 
 button{
@@ -77,6 +78,10 @@ button{
     padding: 12px 0;
     width: 100%;
     border-radius: 0 0 2px 2px;
+}
+
+button:disabled{
+    background: #2f5a92;
 }
 
 footer {

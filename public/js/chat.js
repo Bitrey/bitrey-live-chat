@@ -10,17 +10,40 @@ var message = document.getElementById("message"),
     output = document.getElementById("output"),
     feedback = document.getElementById("feedback");
 
+var spamTimer = false;
 function inviaMsg() {
-    if (username.value !== "" && message.value !== "") {
-        $(".alert").hide();
-        socket.emit("chat", {
-            message: message.value,
-            username: username.value
-        });
-        message.value = "";
-
+    if(!spamTimer){
+        $("#send").attr("disabled", true);
+        $("#message").attr("disabled", true);
+        clearTimeout(spamTimer);
+        spamTimer = setTimeout(function(){
+            spamTimer = false;
+            $("#send").attr("disabled", false);
+            $("#message").attr("disabled", false);
+            $("#message").focus();
+        }, 1000);
+        if (username.value !== "" && message.value !== "") {
+            $(".alert").hide();
+            socket.emit("chat", {
+                message: message.value,
+                username: username.value
+            });
+            message.value = "";
+    
+        } else {
+            $(".alert").show();
+        }
     } else {
-        $(".alert").show();
+        $("#send").text("Slow down ni🅱️🅱️a");
+        $("#send").attr("disabled", true);
+        clearTimeout(spamTimer);
+        spamTimer = setTimeout(function(){
+            $("#send").text("Invia");
+            $("#send").attr("disabled", false);
+            $("#message").attr("disabled", false);
+            $("#message").focus();
+            spamTimer = false;
+        }, 1000);
     }
 }
 
@@ -34,20 +57,37 @@ message.addEventListener("keypress", function() {
 });
 
 message.addEventListener("keyup", function(){
-    if(event.keyCode == 13){
+    if(event.keyCode == 13 && !event.shiftKey){
         inviaMsg();
     };
 });
 
+// $('textarea').keydown(function(e){
+//     if (e.keyCode == 13) {
+//         if (e.shiftKey) {
+//             e.preventDefault();
+//             $("textarea").append("\n");
+//             //emulate enter press with a line break here.
+//             return true;
+//         }
+//         $('#send').click();
+//     }
+// });
+
 var unread = 0;
+
+function getOreMinuti(dataString){
+    var date = new Date(Date.parse(dataString));
+    return `${(date.getHours()<10?'0':'') + date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
+}
 
 // Listen for events
 socket.on("chat", function(data) {
     feedback.innerHTML = "";
     if(data.socket_id == socket.id){
-        output.innerHTML += "<p id='" + data.date + "'><span class='delete'><i class='fa fa-trash' aria-hidden='true'></i></span> <strong>" + data.username + "</strong> " + data.message + "</p>";
+        output.innerHTML += "<p id='" + data.date + "'><span class='delete'><i class='fa fa-trash' aria-hidden='true'></i></span> <strong>" + data.username + "</strong> " + data.message + "<br><small>" + getOreMinuti(data.date) + "</small></p>";
     } else {
-        output.innerHTML += "<p id='" + data.date + "'><strong>" + data.username + "</strong> " + data.message + "</p>";
+        output.innerHTML += "<p id='" + data.date + "'><strong>" + data.username + "</strong> " + data.message + "<br><small>" + getOreMinuti(data.date) + "</small></p>";
     };
     chat_window.scrollTop = chat_window.scrollHeight;
     unread++;
@@ -75,7 +115,7 @@ socket.on("pastMsg", function(messages){
     for(let i = 0; i < messages.length; i++){
         unread++;
         document.title = "(" + unread + ") 3F Chat";
-        output.innerHTML += "<p id='" + messages[i].date + "'><strong>" + messages[i].username + "</strong> " + messages[i].message + "</p>";
+        output.innerHTML += "<p id='" + messages[i].date + "'><strong>" + messages[i].username + "</strong> " + messages[i].message + "<br><small>" + getOreMinuti(messages[i].date) + "</small></p>";
     }
     chat_window.scrollTop = chat_window.scrollHeight;
 });
@@ -107,8 +147,6 @@ $("#output").on("click", ".delete", function(){
 });
 
 socket.on("cancella", function(data){
-    setTimeout(function(){
-        var element = document.getElementById(data.date);
-        element.parentNode.removeChild(element);
-    }, 200);
+    var element = document.getElementById(data.date);
+    element.parentNode.removeChild(element);
 });

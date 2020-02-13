@@ -52,27 +52,31 @@ btn.addEventListener("click", inviaMsg);
 
 message.addEventListener("keypress", function() {
     if(username.value != ""){
-        socket.emit("typing", username.value);
+        if($("#message").val() != ""){
+            socket.emit("typing", username.value);
+        } else {
+            socket.emit("notyping");
+        }
     };
 });
+
+$('body').click(function(){
+    if($("#message").val() == ""){
+        socket.emit("notyping");
+    }
+})
+
+$('body').keypress(function(){
+    if($("#message").val() == ""){
+        socket.emit("notyping");
+    }
+})
 
 message.addEventListener("keyup", function(){
     if(event.keyCode == 13 && !event.shiftKey){
         inviaMsg();
     };
 });
-
-// $('textarea').keydown(function(e){
-//     if (e.keyCode == 13) {
-//         if (e.shiftKey) {
-//             e.preventDefault();
-//             $("textarea").append("\n");
-//             //emulate enter press with a line break here.
-//             return true;
-//         }
-//         $('#send').click();
-//     }
-// });
 
 var unread = 0;
 
@@ -95,7 +99,12 @@ socket.on("chat", function(data) {
 });
 
 socket.on("typing", function(data) {
-    feedback.innerHTML = "<p><em>" + data + " sta scrivendo...</em></p>"
+    feedback.innerHTML = "<p><em>" + data + " sta scrivendo...</em></p>";
+    chat_window.scrollTop = chat_window.scrollHeight;
+});
+
+socket.on("notyping", function() {
+    feedback.innerHTML = "";
     chat_window.scrollTop = chat_window.scrollHeight;
 });
 
@@ -150,3 +159,38 @@ socket.on("cancella", function(data){
     var element = document.getElementById(data.date);
     element.parentNode.removeChild(element);
 });
+
+var imgPrompt = false;
+$("#img").on("click", function(){
+    if($("#username").val() == ""){
+        alert("Inserisci uno username");
+    } else {
+        imgPrompt = prompt("Inserisci il link dell'immagine");
+        if(imgPrompt){
+            try {
+                var img = new Image();
+                img.src = imgPrompt;
+                img.onload = function(){
+                    $(".alert").hide();
+                    socket.emit("chat", {
+                        message: "<img style='width: auto; max-width: 80%; max-height: 300px; display: block;' src='" + imgPrompt + "'",
+                        username: username.value
+                    });
+                };
+                img.onerror = function() {alert("Immagine non valida")};
+            } catch(e){
+                alert("Si è verificato un errore: " + e);
+            }
+        }
+    }
+})
+
+function isUrlImage(uri){
+    uri = uri.split('?')[0];
+    var parts = uri.split('.');
+    var extension = parts[parts.length-1];
+    var imageTypes = ['jpg','jpeg','tiff','png','gif','bmp'];
+    if(imageTypes.indexOf(extension) !== -1) {
+        return true;   
+    }
+}

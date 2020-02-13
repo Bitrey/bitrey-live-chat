@@ -75,6 +75,10 @@ io.on("connection", function(socket){
         socket.broadcast.emit("typing", data);
     })
 
+    socket.on("notyping", function(){
+        socket.broadcast.emit("notyping");
+    })
+
     socket.on("cancella", function(data){
         Message.findOneAndRemove({date: data}, function(err, deleted){
             if(err){

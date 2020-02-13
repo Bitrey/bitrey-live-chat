@@ -70,7 +70,7 @@ input, textarea{
     transition-duration: 0.2s;
 }
 
-button{
+#send{
     background: #4380cf;
     color: #fff;
     font-size: 18px;
@@ -80,11 +80,26 @@ button{
     border-radius: 0 0 2px 2px;
 }
 
-button:disabled{
+#send:disabled{
     background: #2f5a92;
 }
 
+#img{
+    background: #45bb28;
+    color: #fff;
+    font-size: 18px;
+    border: 0;
+    padding: 12px 0;
+    width: 100%;
+    border-radius: 0 0 2px 2px;
+}
+
+#img:disabled{
+    background: #1e6e14;
+}
+
 footer {
+    max-height: 6vh;
     background-color: #f502fd;
     position: relative;
     bottom: 0;
